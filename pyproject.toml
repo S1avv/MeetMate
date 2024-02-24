@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "meetmate"
+version = "0.1.0"
+description = ""
+authors = ["S1avv <code.launchx@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+aiogram = "^3.4.1"
+aiohttp = "^3.9.3"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
