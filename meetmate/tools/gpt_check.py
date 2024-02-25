@@ -1,5 +1,9 @@
-
-
+import pytgpt.phind as phind
+import asyncio
 
 async def request_gpt(text):
-    return text
+    bot = phind.PHIND()
+
+    response = bot.chat(text)
+
+    return response
