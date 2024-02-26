@@ -23,7 +23,12 @@ profile = InlineKeyboardBuilder()
 
 profile.add(types.InlineKeyboardButton(
         text="⛏️ Сменить отображаемое имя", 
-        callback_data=Pagination(action="profile").pack())
+        callback_data=Pagination(action="chang_name").pack())
+    )
+
+profile.add(types.InlineKeyboardButton(
+        text="🎨 Фотография профиля", 
+        callback_data=Pagination(action="chang_picture_menu").pack())
     )
 
 profile.add(types.InlineKeyboardButton(
@@ -43,12 +48,12 @@ profile.add(types.InlineKeyboardButton(
 
 profile.add(types.InlineKeyboardButton(
         text="👤 Сменить возраст", 
-        callback_data=Pagination(action="chang_descr").pack())
+        callback_data=Pagination(action="chang_age").pack())
     )
 
 profile.add(types.InlineKeyboardButton(
         text="🧑‍🎓 Сменить хобби и интересы", 
-        callback_data=Pagination(action="chang_descr").pack())
+        callback_data=Pagination(action="chang_hobby").pack())
     )
 
 profile.add(types.InlineKeyboardButton(
@@ -73,4 +78,39 @@ change_gender.add(types.InlineKeyboardButton(
         callback_data=Pagination(action="gender_G").pack())
     )
 
+change_gender.add(types.InlineKeyboardButton(
+        text="↩️ Назад", 
+        callback_data=Pagination(action="profile").pack())
+    )
+
 change_gender.adjust(1)
+
+
+
+
+pic_change = InlineKeyboardBuilder()
+
+pic_change.add(types.InlineKeyboardButton(
+        text="➖ Удалить фото профиля", 
+        callback_data=Pagination(action="pic_delete").pack())
+    )
+
+pic_change.add(types.InlineKeyboardButton(
+        text="➕ Установить фото профиля", 
+        callback_data=Pagination(action="chang_picture").pack())
+    )
+
+pic_change.add(types.InlineKeyboardButton(
+        text="↩️ Назад", 
+        callback_data=Pagination(action="profile").pack())
+    )
+
+pic_change.adjust(1)
+
+
+error = InlineKeyboardBuilder()
+
+error.add(types.InlineKeyboardButton(
+        text="↩️ Назад", 
+        callback_data=Pagination(action="profile").pack())
+    )

@@ -9,14 +9,24 @@ from handlers.main import main_router
 from handlers.change_description import chang_descr
 from handlers.change_country import chang_coun
 from handlers.change_gender import chang_gend
+from handlers.photo_type import photo_ty
+from handlers.change_picture import chang_pic
+from handlers.change_name import chang_nameuser
+from handlers.change_age import chang_age_menu
+from handlers.change_hobby import chang_hobby_menu
 
 import asyncio
 
 
 def register_routers(dp: Dispatcher) -> None:
     dp.include_router(start_cmd)
+    dp.include_router(photo_ty)
+    dp.include_router(chang_hobby_menu)
+    dp.include_router(chang_age_menu)
+    dp.include_router(chang_nameuser)
     dp.include_router(chang_coun)
     dp.include_router(chang_gend)
+    dp.include_router(chang_pic)
     dp.include_router(chang_descr)
     dp.include_router(main_router)
     dp.include_router(profile_data)

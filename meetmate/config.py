@@ -1,6 +1,8 @@
 from aiogram import Bot
 
+TOKEN = ""
+
 bot = Bot(
-    token="BOT_TOKEN",
+    token=TOKEN,
     parse_mode="HTML"
 )

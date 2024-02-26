@@ -17,7 +17,17 @@ async def get_completed_profile(callback_query: types.CallbackQuery) -> None:
         await cursor.execute(f"SELECT * FROM profiles WHERE id = {callback_query.from_user.id}")
         users_data = await cursor.fetchone()
 
+        async with db.execute("UPDATE users SET input_type = ?, callback_query = ? WHERE id = ?",
+                              ("None", str(callback_query.message.message_id), callback_query.from_user.id)) as cursor:
+            await db.commit()
+
         file_path = os.path.join(f"meetmate/avatars", f"{callback_query.from_user.id}.png")
+
+        photo_path = f"meetmate/avatars/{callback_query.from_user.id}.png"
+        if os.path.exists(photo_path):
+            pass
+        else:
+            photo_path = "meetmate/assets/start.png"
 
         new_caption = (
             f"🚀 Профиль пользователя {callback_query.from_user.username}\n\n"
@@ -30,6 +40,6 @@ async def get_completed_profile(callback_query: types.CallbackQuery) -> None:
             f"📂 Фото профиля: <b>{'Есть' if os.path.exists(file_path) else 'Нету'}</b>"
         )
 
-        media = InputMediaPhoto(media=FSInputFile(file_path), caption=new_caption)
+        media = InputMediaPhoto(media=FSInputFile(photo_path), caption=new_caption)
 
         await callback_query.message.edit_media(media=media, reply_markup=builder.profile.as_markup())

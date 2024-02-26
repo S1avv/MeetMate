@@ -12,6 +12,7 @@ aiohttp = "^3.9.3"
 python-tgpt = "^0.5.3"
 g4f = "^0.2.2.0"
 aiosqlite = "^0.20.0"
+pillow = "^10.2.0"
 
 
 [build-system]

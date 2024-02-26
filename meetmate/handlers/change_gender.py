@@ -21,6 +21,10 @@ async def main_starter(callback_query: types.CallbackQuery) -> None:
 
     await callback_query.message.edit_media(media=media, reply_markup=builder.change_gender.as_markup())
 
+    async with aiosqlite.connect("meetmate/database.sqlite") as db:
+        async with db.execute("UPDATE users SET input_type = ?, callback_query = ? WHERE id = ?",
+                              ("gender", str(callback_query.message.message_id), callback_query.from_user.id)) as cursor:
+            await db.commit()
 
 @chang_gend.callback_query(builder.Pagination.filter(F.action == "gender_M"))
 async def gen_m(callback_query: types.CallbackQuery) -> None:
@@ -47,7 +51,13 @@ async def gen_m(callback_query: types.CallbackQuery) -> None:
             f"📂 Фото профиля: <b>{"Есть" if os.path.exists(os.path.join("avatars", str({callback_query.from_user.id}))) else "Нету"}</b>"
         )
 
-        photo_path = f"meetmate/avatars/{callback_query.from_user.id}.png" if os.path.join(f"meetmate/avatars", f"{callback_query.from_user.id}.png") else "meetmate/assets/start.png"
+        file_path = os.path.join(f"meetmate/avatars", f"{callback_query.from_user.id}.png")
+
+        photo_path = f"meetmate/avatars/{callback_query.from_user.id}.png"
+        if os.path.exists(photo_path):
+            pass
+        else:
+            photo_path = "meetmate/assets/start.png"
 
         media = InputMediaPhoto(media=FSInputFile(photo_path), caption=caption)
 
@@ -79,8 +89,13 @@ async def gen_g(callback_query: types.CallbackQuery) -> None:
             f"📂 Фото профиля: <b>{"Есть" if os.path.exists(os.path.join("avatars", str({callback_query.from_user.id}))) else "Нету"}</b>"
         )
 
-        photo_path = f"meetmate/avatars/{callback_query.from_user.id}.png" if os.path.join(f"meetmate/avatars", f"{callback_query.from_user.id}.png") else "meetmate/assets/start.png"
+        file_path = os.path.join(f"meetmate/avatars", f"{callback_query.from_user.id}.png")
 
+        photo_path = f"meetmate/avatars/{callback_query.from_user.id}.png"
+        if os.path.exists(photo_path):
+            pass
+        else:
+            photo_path = "meetmate/assets/start.png"
         media = InputMediaPhoto(media=FSInputFile(photo_path), caption=caption)
 
         await bot.edit_message_media(media=media, chat_id=callback_query.from_user.id, message_id=users_data[5], reply_markup=builder.profile.as_markup())
